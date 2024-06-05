@@ -1,7 +1,7 @@
 This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
 
 ## Getting Started
-
+PEACE READ E
 First, run the development server:
 
 ```bash
