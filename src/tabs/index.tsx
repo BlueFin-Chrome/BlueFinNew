@@ -2,6 +2,7 @@ import React from "react"
 
 import "../style.css"
 
+import FinalScreen from "~components/FinalScreen"
 import BlueFinnLogin from "~components/login/login"
 import MonthlyPricing from "~components/pricing"
 import Pricing from "~components/pricing"
@@ -12,7 +13,8 @@ function Index() {
     <div className="font-poppins">
       {/* <BlueFinnLogin onLogin={false} /> */}
       {/* <TutorialSection /> */}
-      <Pricing />
+      {/* <Pricing /> */}
+      <FinalScreen />
     </div>
   )
 }
