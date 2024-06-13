@@ -2,10 +2,13 @@ import React from "react"
 
 import HouseIcon from "~assets/house"
 
-export default function FinalScreen() {
+import LogoutBtn from "./Logout"
+
+export default function FinalScreen({ onLogout }) {
   return (
     <>
       <div className="flex font-poppins items-center justify-center flex-col h-screen">
+        <LogoutBtn onLogout={onLogout} />
         <div className="space-y-8">
           {/* Heading */}
 
