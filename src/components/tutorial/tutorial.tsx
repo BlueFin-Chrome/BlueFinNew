@@ -1,6 +1,10 @@
 import React from "react"
 
-export default function TutorialSection() {
+export default function TutorialSection({ setIsTutorialPage }) {
+  const handleGetStarted = () => {
+    setIsTutorialPage(false)
+    window.open("https://www.youtube.com/", "_blank")
+  }
   return (
     <>
       <div className="flex font-poppins items-center justify-center flex-col h-screen">
@@ -33,9 +37,7 @@ export default function TutorialSection() {
           <div className="flex justify-center">
             <button
               type="button"
-              onClick={() => {
-                window.open("https://www.youtube.com/", "_blank")
-              }}
+              onClick={handleGetStarted}
               className="hover:bg-[#2d4165] bg-[#175CD3] transition-all rounded-full font-semibold text-white px-24 py-2">
               Let's Get Started
             </button>

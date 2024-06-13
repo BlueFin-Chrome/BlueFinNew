@@ -1,7 +1,13 @@
 // ZillowDealFinder.jsx
 import React from "react"
 
-const PricingSection = ({ Price, isMonthly, handleYearly, handleMonthly }) => {
+const PricingSection = ({
+  Price,
+  isMonthly,
+  handleYearly,
+  handleMonthly,
+  handleChange
+}) => {
   return (
     <div className="flex flex-col items-center w-[421px] h-[394px] bg-[#D1E9FF] rounded-[14px] mx-auto my-10">
       <div className="flex flex-col items-center w-[409px] h-[382px] bg-white border border-gray-700 rounded-[14px] mt-2">
@@ -58,7 +64,9 @@ const PricingSection = ({ Price, isMonthly, handleYearly, handleMonthly }) => {
           </div>
         </div>
         <div className="flex justify-center items-center w-full mt-6">
-          <button className="flex justify-center items-center w-[349px] h-[42px] bg-[#175CD3] rounded-[24px]">
+          <button
+            onClick={handleChange}
+            className="flex justify-center items-center w-[349px] h-[42px] bg-[#175CD3] rounded-[24px]">
             <span className="font-bold text-sm text-white">Choose Plan</span>
           </button>
         </div>

@@ -5,7 +5,6 @@ import "../style.css"
 import FinalScreen from "~components/FinalScreen"
 import Loader from "~components/login/Loader"
 import BlueFinnLogin from "~components/login/login"
-import MonthlyPricing from "~components/pricing"
 import Pricing from "~components/pricing"
 import TutorialSection from "~components/tutorial/tutorial"
 import { useFirebase } from "~firebase/hook"
@@ -13,6 +12,8 @@ import { useFirebase } from "~firebase/hook"
 function Index() {
   const { user, isLoading, onLogin, onLogout } = useFirebase()
   const [testLoading, setTestLoading] = React.useState(true)
+  const [isTutorialPage, setIsTutorialPage] = React.useState(true)
+  const [isPricingPage, setIsPricingPage] = React.useState(true)
 
   setTimeout(() => {
     setTestLoading(false)
@@ -31,7 +32,15 @@ function Index() {
       ) : testLoading ? (
         <Loader />
       ) : (
-        <FinalScreen onLogout={onLogout} />
+        <>
+          {isTutorialPage ? (
+            <TutorialSection setIsTutorialPage={setIsTutorialPage} />
+          ) : isPricingPage ? (
+            <Pricing setIsPricingPage={setIsPricingPage} />
+          ) : (
+            <FinalScreen onLogout={onLogout} />
+          )}
+        </>
       )}
     </div>
   )

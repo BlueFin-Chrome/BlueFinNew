@@ -2,7 +2,7 @@ import React from "react"
 
 import PricingSection from "./Pricing"
 
-export default function Pricing() {
+export default function Pricing({ setIsPricingPage }) {
   const [Price, setPrice] = React.useState(495)
   const [isMonthly, setIsMonthly] = React.useState(true)
 
@@ -13,6 +13,10 @@ export default function Pricing() {
   const handleMonthly = () => {
     setPrice(495)
     setIsMonthly(true)
+  }
+
+  const handleChange = () => {
+    setIsPricingPage(false)
   }
   return (
     <>
@@ -30,6 +34,7 @@ export default function Pricing() {
               isMonthly={isMonthly}
               handleYearly={handleYearly}
               handleMonthly={handleMonthly}
+              handleChange={handleChange}
             />
           </div>
           {/* Get Started Button */}

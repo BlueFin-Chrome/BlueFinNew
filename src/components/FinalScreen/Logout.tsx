@@ -10,8 +10,8 @@ export default function LogoutBtn({ onLogout }) {
             onClick={() => {
               onLogout()
             }}
-            className=" rounded-full transition-all p-2 border flex items-center justify-center hover:border-[#112d1b] border-[#000000]">
-            <IoMdLogOut className="text-[#d84343] text-lg" />
+            className=" rounded-full transition-all p-2  flex items-center justify-center">
+            <IoMdLogOut className="text-[#d84343] text-xl" />
           </button>
         </abbr>
       </div>
