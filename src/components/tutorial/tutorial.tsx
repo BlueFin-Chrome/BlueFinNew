@@ -1,9 +1,6 @@
-import React from "react"
-
 export default function TutorialSection({ setIsTutorialPage }) {
   const handleGetStarted = () => {
     setIsTutorialPage(false)
-    window.open("https://www.youtube.com/", "_blank")
   }
   return (
     <>
