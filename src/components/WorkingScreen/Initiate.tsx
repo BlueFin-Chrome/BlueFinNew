@@ -1,11 +1,10 @@
 import { BiChevronRight } from "react-icons/bi"
 
+import CloseButton from "~components/CloseBtn"
+
 import house from "../WorkingScreen/house.png"
 
 const Initiate = ({ setShowWorkingScreen }) => {
-  const handleClose = () => {
-    setShowWorkingScreen(false)
-  }
   return (
     <div className="fixed top-0 right-0 w-[751px] h-[905px]">
       <div className="w-full h-full bg-white border-l border-gray-200 shadow-md">
@@ -33,18 +32,7 @@ const Initiate = ({ setShowWorkingScreen }) => {
             </div>
           </div>
         </div>
-        <div
-          onClick={handleClose}
-          className="flex items-center gap-3.5 absolute w-[145px] h-[40px] right-6 top-7 cursor-pointer">
-          <div className="text-black text-center text-lg font-medium">
-            Close Tab
-          </div>
-          <div className="text-[40px] bg-slate-100 rounded-full p-1.5">
-            <span className="text-[24px]">
-              <BiChevronRight />
-            </span>
-          </div>
-        </div>
+        <CloseButton setShowWorkingScreen={setShowWorkingScreen} />
       </div>
     </div>
   )
