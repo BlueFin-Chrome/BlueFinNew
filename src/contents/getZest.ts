@@ -1,20 +1,24 @@
-import { asyncSleep, getAllArticles, scrollDiv } from "~utils/helper"
+import {
+  asyncSleep,
+  getAllArticles,
+  getBlueFinnArticles,
+  scrollDiv
+} from "~utils/helper"
 
 console.log("getZest")
 
 async function getZestimate() {
+  let finalHouses = []
   await asyncSleep(1)
-  const wholeDiv = document.querySelector(
-    "#search-page-list-container"
-  ) as HTMLElement
-  await scrollDiv(wholeDiv)
 
-  const allArticles = document.querySelectorAll("article")
-  for (let i = 0; i < allArticles.length; i++) {
-    const article = allArticles[i]
-    await getAllArticles(article)
-    console.log(article, "article")
-  }
+  // getting all the articles
+  const allArticles = await getAllArticles()
+  console.log(allArticles, "allArticles")
+
+  // for (let i = 0; i < allArticles.length; i++) {
+  //   const article = allArticles[i]
+  //   await getBlueFinnArticles(article)
+  // }
 }
 export default getZestimate
 

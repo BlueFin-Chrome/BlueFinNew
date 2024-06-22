@@ -4,12 +4,17 @@ import FinalScreen from "./finalScreen"
 import Initiate from "./Initiate"
 import LoadingScreen from "./loadingScreen"
 
-const WorkingScreen = ({ setShowWorkingScreen }) => {
+const WorkingScreen = ({ setShowWorkingScreen, isHomes }) => {
   return (
     <div>
-      {/* <Initiate setShowWorkingScreen={setShowWorkingScreen} /> */}
-      {/* <LoadingScreen setShowWorkingScreen={setShowWorkingScreen} /> */}
-      <FinalScreen setShowWorkingScreen={setShowWorkingScreen} />
+      {isHomes ? (
+        <>
+          <LoadingScreen setShowWorkingScreen={setShowWorkingScreen} />
+          {/* <FinalScreen setShowWorkingScreen={setShowWorkingScreen} /> */}
+        </>
+      ) : (
+        <Initiate setShowWorkingScreen={setShowWorkingScreen} />
+      )}
     </div>
   )
 }

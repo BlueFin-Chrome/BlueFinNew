@@ -25,8 +25,16 @@ export const getStyle = () => {
 
 const PlasmoOverlay = () => {
   const [showWorkingScreen, setShowWorkingScreen] = useState(false)
+  const [isHomes, setIsHomes] = useState(false)
+
   const handleFilter = () => {
-    // getZestimate()
+    const wholeDiv = document.querySelector(
+      "#search-page-list-container"
+    ) as HTMLElement
+    if (wholeDiv) {
+      setIsHomes(true)
+    }
+    getZestimate()
     setShowWorkingScreen(true)
   }
 
@@ -34,7 +42,10 @@ const PlasmoOverlay = () => {
     <>
       {showWorkingScreen ? (
         <div>
-          <WorkingScreen setShowWorkingScreen={setShowWorkingScreen} />
+          <WorkingScreen
+            setShowWorkingScreen={setShowWorkingScreen}
+            isHomes={isHomes}
+          />
         </div>
       ) : (
         <div
