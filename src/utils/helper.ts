@@ -72,8 +72,8 @@ async function getBlueFinnArticles(
   console.log("getBlueFinnArticles")
   const blueFinnArticles: HTMLElement[] = []
 
-  try {
-    for (const article of articles) {
+  for (const article of articles) {
+    try {
       const priceElement = article.querySelector(
         `[data-test="property-card-price"]`
       )
@@ -95,20 +95,28 @@ async function getBlueFinnArticles(
       const html = await response.text()
       const parser = new DOMParser()
       const doc = parser.parseFromString(html, "text/html")
+
+      let containerBlock: HTMLElement
+      let zestimateRef: string | null
+
       const containerBlockRef = doc.querySelectorAll(
         `.styles__StyledDataModule-fshdp-8-100-2__sc-14rfp2w-0`
       ) as NodeListOf<HTMLElement>
-      const containerBlock = containerBlockRef[3] as HTMLElement
-      console.log(containerBlock, "containerBlock")
-      if (!containerBlock) throw new Error("Container block not found")
 
-      const allList = containerBlock.querySelectorAll(
-        ".Text-c11n-8-100-2__sc-aiai24-0"
-      )
-      if (allList.length < 4) throw new Error("Not enough elements in allList")
-
-      const zestimateRef = allList[3].textContent
-      if (!zestimateRef) throw new Error("Zestimate not found")
+      if (containerBlockRef) {
+        containerBlock = containerBlockRef[3] as HTMLElement
+        const allList = containerBlock?.querySelectorAll(
+          ".Text-c11n-8-100-2__sc-aiai24-0"
+        )
+        if (allList.length < 4)
+          throw new Error("Not enough elements in allList")
+        zestimateRef = allList[3].textContent
+      } else {
+        zestimateRef = document
+          .querySelector(`[data-testid="zestimate-text"]`)
+          ?.textContent?.replace(",", "")
+          .replace("$", "") as string
+      }
 
       let zestimatePrice: string | undefined
       try {
@@ -130,9 +138,9 @@ async function getBlueFinnArticles(
 
         blueFinnArticles.push(blueFinnArticle)
       }
+    } catch (error) {
+      console.log("Error checking article:", error)
     }
-  } catch (error) {
-    console.log("Error checking Zestimate:", error)
   }
 
   return blueFinnArticles
