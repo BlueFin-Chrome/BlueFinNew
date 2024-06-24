@@ -66,60 +66,76 @@ async function scrollDiv() {
 }
 
 // new method for scroll div
+async function getBlueFinnArticles(
+  articles: HTMLElement[]
+): Promise<HTMLElement[]> {
+  console.log("getBlueFinnArticles")
+  const blueFinnArticles: HTMLElement[] = []
 
-async function getBlueFinnArticles(article: HTMLElement) {
   try {
-    const priceElement = article.querySelector(
-      `[data-test="property-card-price"]`
-    )
-    if (!priceElement) throw new Error("Price element not found")
+    for (const article of articles) {
+      const priceElement = article.querySelector(
+        `[data-test="property-card-price"]`
+      )
+      if (!priceElement) throw new Error("Price element not found")
 
-    const askingPrice = priceElement.textContent
-      ?.replace(",", "")
-      .replace("$", "")
+      const askingPrice = priceElement.textContent
+        ?.replace(",", "")
+        .replace("$", "")
 
-    if (!askingPrice) throw new Error("Unable to parse asking price")
+      if (!askingPrice) throw new Error("Unable to parse asking price")
 
-    const zillowUrl = article.querySelector("a")?.getAttribute("href")
-    if (!zillowUrl) throw new Error("Zillow URL not found")
+      const zillowUrl = article.querySelector("a")?.getAttribute("href")
+      if (!zillowUrl) throw new Error("Zillow URL not found")
 
-    const response = await fetch(zillowUrl)
-    if (!response.ok)
-      throw new Error(`Failed to fetch URL: ${response.statusText}`)
+      const response = await fetch(zillowUrl)
+      if (!response.ok)
+        throw new Error(`Failed to fetch URL: ${response.statusText}`)
 
-    const html = await response.text()
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, "text/html")
-    const containerBlockRef = doc.querySelectorAll(
-      `.styles__StyledDataModule-fshdp-8-100-2__sc-14rfp2w-0`
-    ) as NodeListOf<HTMLElement>
-    const containerBlock = containerBlockRef[3] as HTMLElement
-    console.log(containerBlock, "containerBlock")
-    if (!containerBlock) throw new Error("Container block not found")
+      const html = await response.text()
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(html, "text/html")
+      const containerBlockRef = doc.querySelectorAll(
+        `.styles__StyledDataModule-fshdp-8-100-2__sc-14rfp2w-0`
+      ) as NodeListOf<HTMLElement>
+      const containerBlock = containerBlockRef[3] as HTMLElement
+      console.log(containerBlock, "containerBlock")
+      if (!containerBlock) throw new Error("Container block not found")
 
-    const allList = containerBlock.querySelectorAll(
-      ".Text-c11n-8-100-2__sc-aiai24-0"
-    )
-    if (allList.length < 4) throw new Error("Not enough elements in allList")
+      const allList = containerBlock.querySelectorAll(
+        ".Text-c11n-8-100-2__sc-aiai24-0"
+      )
+      if (allList.length < 4) throw new Error("Not enough elements in allList")
 
-    const zestimateRef = allList[3].textContent
-    if (!zestimateRef) throw new Error("Zestimate not found")
+      const zestimateRef = allList[3].textContent
+      if (!zestimateRef) throw new Error("Zestimate not found")
 
-    const zestimatePrice = zestimateRef.match(/\d+/g)?.join("")
-    if (!zestimatePrice) throw new Error("Unable to parse Zestimate")
+      let zestimatePrice: string | undefined
+      try {
+        zestimatePrice = zestimateRef.match(/\d+/g)?.join("")
+        if (!zestimatePrice) throw new Error("Unable to parse Zestimate")
+      } catch (error) {
+        console.log("Error parsing Zestimate:", error)
+        continue // Skip to the next article
+      }
 
-    // await asyncSleep(2)
+      // await asyncSleep(2);
 
-    if (parseInt(askingPrice) < parseInt(zestimatePrice)) {
-      const blueFinnArticle = article?.parentNode?.parentNode
-        ?.parentNode as HTMLElement
-      console.log("Show")
+      if (parseInt(askingPrice) < parseInt(zestimatePrice)) {
+        const blueFinnArticle = article?.parentNode?.parentNode
+          ?.parentNode as HTMLElement
+        console.log("Show")
 
-      console.log(blueFinnArticle, "parent")
+        console.log(blueFinnArticle, "parent")
+
+        blueFinnArticles.push(blueFinnArticle)
+      }
     }
   } catch (error) {
     console.log("Error checking Zestimate:", error)
   }
+
+  return blueFinnArticles
 }
 
 function asyncSleep(sec: number) {
@@ -134,6 +150,7 @@ async function getAllArticles() {
   const paginationButtonsRef = document.querySelector(
     `[data-testid="search-pagination"]`
   ) as HTMLElement
+
   while (true) {
     await scrollDiv()
 
@@ -141,7 +158,7 @@ async function getAllArticles() {
     await asyncSleep(1)
     finalArticles.push(...allArticles)
 
-    const firstActiveButton = paginationButtonsRef.querySelector(
+    const firstActiveButton = paginationButtonsRef?.querySelector(
       `li[aria-current="page"]`
     )
 

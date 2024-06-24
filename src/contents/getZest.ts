@@ -1,9 +1,4 @@
-import {
-  asyncSleep,
-  getAllArticles,
-  getBlueFinnArticles,
-  scrollDiv
-} from "~utils/helper"
+import { asyncSleep, getAllArticles, getBlueFinnArticles } from "~utils/helper"
 
 console.log("getZest")
 
@@ -13,7 +8,12 @@ async function getZestimate() {
 
   // getting all the articles
   const allArticles = await getAllArticles()
-  console.log(allArticles, "allArticles")
+  getBlueFinnArticles(allArticles)
+    .then((blueFinnArticles) => {
+      console.log("Blue Finn Articles:", blueFinnArticles)
+      // Process blueFinnArticles as needed
+    })
+    .catch((error) => console.error("Error processing articles:", error))
 
   // for (let i = 0; i < allArticles.length; i++) {
   //   const article = allArticles[i]
