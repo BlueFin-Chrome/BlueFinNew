@@ -4,13 +4,24 @@ import FinalScreen from "./finalScreen"
 import Initiate from "./Initiate"
 import LoadingScreen from "./loadingScreen"
 
-const WorkingScreen = ({ setShowWorkingScreen, isHomes }) => {
+const WorkingScreen = ({
+  setShowWorkingScreen,
+  isHomes,
+  showFinalScreen,
+  finalFilteredArticles
+}) => {
   return (
-    <div>
+    <div className="overflow-auto">
       {isHomes ? (
         <>
-          <LoadingScreen setShowWorkingScreen={setShowWorkingScreen} />
-          {/* <FinalScreen setShowWorkingScreen={setShowWorkingScreen} /> */}
+          {!showFinalScreen ? (
+            <LoadingScreen setShowWorkingScreen={setShowWorkingScreen} />
+          ) : (
+            <FinalScreen
+              setShowWorkingScreen={setShowWorkingScreen}
+              finalFilteredArticles={finalFilteredArticles}
+            />
+          )}
         </>
       ) : (
         <Initiate setShowWorkingScreen={setShowWorkingScreen} />

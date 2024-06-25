@@ -2,7 +2,7 @@ import { BiSolidFileExport } from "react-icons/bi"
 
 import CloseButton from "~components/CloseBtn"
 
-const FinalScreen = ({ setShowWorkingScreen }) => {
+const FinalScreen = ({ setShowWorkingScreen, finalFilteredArticles }) => {
   return (
     <div className="fixed top-0 right-0 w-[751px] h-[905px]">
       <div className="w-full h-full bg-white border-l border-gray-200 shadow-md">

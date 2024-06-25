@@ -6,6 +6,7 @@ import BlueFinnLogo from "~assets/logo"
 import WorkingScreen from "~components/WorkingScreen"
 import Initiate from "~components/WorkingScreen/Initiate"
 
+import { getBlueFinnArticles } from "../utils/helper"
 import getZestimate from "./getZest"
 
 export const config: PlasmoCSConfig = {
@@ -25,17 +26,23 @@ export const getStyle = () => {
 
 const PlasmoOverlay = () => {
   const [showWorkingScreen, setShowWorkingScreen] = useState(false)
+  const [showFinalScreen, setShowFinalScreen] = useState(false)
   const [isHomes, setIsHomes] = useState(false)
+  const [finalFilteredArticles, setFinalFilteredArticles] = useState([])
 
-  const handleFilter = () => {
+  const handleFilter = async () => {
     const wholeDiv = document.querySelector(
       "#search-page-list-container"
     ) as HTMLElement
     if (wholeDiv) {
       setIsHomes(true)
     }
-    getZestimate()
     setShowWorkingScreen(true)
+    const allArticles = await getZestimate()
+    const filteredArticles = await getBlueFinnArticles(allArticles)
+    setFinalFilteredArticles(filteredArticles)
+
+    setShowFinalScreen(true)
   }
 
   return (
@@ -45,6 +52,8 @@ const PlasmoOverlay = () => {
           <WorkingScreen
             setShowWorkingScreen={setShowWorkingScreen}
             isHomes={isHomes}
+            showFinalScreen={showFinalScreen}
+            finalFilteredArticles={finalFilteredArticles}
           />
         </div>
       ) : (
