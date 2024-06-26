@@ -1,11 +1,24 @@
+import { useState } from "react"
 import { BiSolidFileExport } from "react-icons/bi"
 
 import CloseButton from "~components/CloseBtn"
+import { parsePropertyElements } from "~utils/helper"
+
+import PropertyList from "./PropertyCard"
 
 const FinalScreen = ({ setShowWorkingScreen, finalFilteredArticles }) => {
+  let f = []
+  const [finalHouses, setFinalHouses] = useState([])
+  const finalHousesFromFunc = parsePropertyElements(finalFilteredArticles)
+  if (finalHousesFromFunc.length > 0) {
+    f = finalHousesFromFunc
+    // setFinalHouses(finalHousesFromFunc)
+  }
+  console.log(finalHouses, "finalHouses")
+  console.log(f, "f")
   return (
-    <div className="fixed top-0 right-0 w-[751px] h-[905px]">
-      <div className="w-full h-full bg-white border-l border-gray-200 shadow-md">
+    <div className="fixed top-0 right-0 w-[751px] h-auto overflow-auto ">
+      <div className="w-full  bg-white border-l border-gray-200 shadow-md h-auto">
         <div>
           <div className="flex relative top-[30px] px-6 font-bold">
             <h1 className=" text-[24px]">BlueFin Deals Found:</h1>
@@ -24,7 +37,12 @@ const FinalScreen = ({ setShowWorkingScreen, finalFilteredArticles }) => {
           <CloseButton setShowWorkingScreen={setShowWorkingScreen} />
         </div>
         {/* Zestimate Based Equity */}
-        <div className="w-[691px] h-[188px] rounded-2xl border border-[#E9E9E9] relative left-[30px] top-7"></div>
+        <div className="w-[691px] h-[158px] rounded-2xl border border-[#E9E9E9] relative left-[30px] top-7"></div>
+        {/* Filtered Results */}
+        <div className="p-3 overflow-auto h-[550px] mt-6 relative left-5">
+          <PropertyList finalFilteredArticles={f} />
+        </div>
+        <div className="h-80 w-full"></div>
       </div>
     </div>
   )

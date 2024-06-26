@@ -185,13 +185,63 @@ async function getAllArticles() {
   // return all articles
   return finalArticles
 }
+// Function for parse filtered articles
+function parsePropertyElements(elements: any) {
+  const properties = []
+
+  elements?.forEach((element: any) => {
+    const scriptTag = element?.querySelector(
+      'script[type="application/ld+json"]'
+    )
+    if (!scriptTag) return
+
+    const jsonData = JSON?.parse(scriptTag?.textContent)
+    const address = jsonData?.address
+    const price = element?.querySelector(
+      ".PropertyCardWrapper__StyledPriceLine-srp-8-101-0__sc-16e8gqd-1"
+    )
+    const detailsList = element?.querySelectorAll(
+      ".StyledPropertyCardHomeDetailsList-c11n-8-101-0__sc-1j0som5-0 li"
+    )
+
+    const property = {
+      name: jsonData.name,
+      address: {
+        streetAddress: address.streetAddress,
+        addressLocality: address.addressLocality,
+        addressRegion: address.addressRegion,
+        postalCode: address.postalCode
+      },
+      price: price ? price.textContent?.trim() : "Price not listed" || 0,
+      beds: parseInt(detailsList[0]?.textContent) || 0,
+      baths: parseInt(detailsList[1]?.textContent) || 0,
+      sqft: parseInt(detailsList[2]?.textContent?.replace(",", "")) || 0,
+      url: jsonData.url || "",
+      images: []
+    }
+
+    // Extracting images
+    const imageContainers = element.querySelectorAll(
+      ".StyledPropertyCardPhoto-c11n-8-101-0__sc-radyfj-0 img"
+    )
+    if (!imageContainers) return
+    imageContainers?.forEach((img) => {
+      property.images.push(img.getAttribute("src"))
+    })
+
+    properties.push(property)
+  })
+
+  return properties
+}
 
 export {
   scrollTillBottom,
   asyncSleep,
   getBlueFinnArticles,
   scrollDiv,
-  getAllArticles
+  getAllArticles,
+  parsePropertyElements
 }
 
 // for (let i = 0; i < allArticles.length; i++) {

@@ -2,7 +2,7 @@ import { BiChevronRight } from "react-icons/bi"
 
 import CloseButton from "~components/CloseBtn"
 
-import house from "../WorkingScreen/house.png"
+import house from "../././../assets/house.png"
 
 const Initiate = ({ setShowWorkingScreen }) => {
   return (

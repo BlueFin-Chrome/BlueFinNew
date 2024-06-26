@@ -17,3 +17,41 @@
     font-style: normal;
   }
 }
+
+.property-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+}
+
+.property-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 335px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.property-card img {
+  width: 100%;
+  height: auto;
+}
+
+.property-card h2 {
+  font-size: 1.25em;
+  margin: 0.5em 0;
+}
+
+.property-card p {
+  margin: 0.25em 0;
+}
+
+.property-card a {
+  color: #0074e4;
+  text-decoration: none;
+}
+
+.property-card a:hover {
+  text-decoration: underline;
+}

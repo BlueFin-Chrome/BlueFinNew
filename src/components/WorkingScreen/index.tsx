@@ -12,7 +12,7 @@ const WorkingScreen = ({
 }) => {
   return (
     <div className="overflow-auto">
-      {isHomes ? (
+      {/* {isHomes ? (
         <>
           {!showFinalScreen ? (
             <LoadingScreen setShowWorkingScreen={setShowWorkingScreen} />
@@ -21,11 +21,15 @@ const WorkingScreen = ({
               setShowWorkingScreen={setShowWorkingScreen}
               finalFilteredArticles={finalFilteredArticles}
             />
-          )}
-        </>
-      ) : (
-        <Initiate setShowWorkingScreen={setShowWorkingScreen} />
-      )}
+            )}
+            </>
+            ) : (
+              <Initiate setShowWorkingScreen={setShowWorkingScreen} />
+              )} */}
+      <FinalScreen
+        setShowWorkingScreen={setShowWorkingScreen}
+        finalFilteredArticles={finalFilteredArticles}
+      />
     </div>
   )
 }
